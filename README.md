@@ -5,10 +5,13 @@
 * [What is Docker](#what-is-docker)
 * [Why Docker](#why-docker)
 * [Installation](#installation)
+* [Containers](#containers)
+* [Images](#images)
+* [Networks](#networks)
 
 ## What is Docker
 
-"Docker is a tool which helps developers build and ship high quality applications, faster."
+"Docker is a tool which helps developers build and ship high quality applications, faster, anywhere."
 
 ## Why Docker
 
@@ -44,3 +47,15 @@ docker run hello-world
 That's it, you have a running Docker container.
 
 If you are a complete Docker newbie, you should probably follow the [series of tutorials](https://docs.docker.com/engine/getstarted/) now.
+
+## Containers
+
+Docker implements a high-level API to provide lightweight containers that run processes in [isolation](http://etherealmind.com/basics-docker-containers-hypervisors-coreos/).
+
+### Lifecycle
+
+* [`docker create`](https://docs.docker.com/engine/reference/commandline/create) creates a container but does not start it.
+* [`docker rename`](https://docs.docker.com/engine/reference/commandline/rename/) allows the container to be renamed.
+* [`docker run`](https://docs.docker.com/engine/reference/commandline/run) creates and starts a container in one operation.
+* [`docker rm`](https://docs.docker.com/engine/reference/commandline/rm) deletes a container.
+* [`docker update`](https://docs.docker.com/engine/reference/commandline/update/) updates a container's resource limits.
