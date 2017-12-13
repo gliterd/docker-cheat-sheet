@@ -15,6 +15,8 @@ With Docker, developers can build any app in any language using any toolchain. D
 
 Developers can get going by just spinning any container out of list on Docker Hub. Docker manages and tracks changes and dependencies, making it easier for sysadmins to understand how the apps that developers build work. And with Docker Hub, developers can automate their build pipeline and share artifacts with collaborators through public or private repositories.
 
+If you are a complete Docker newbie, you should probably follow the [series of tutorials](https://docs.docker.com/engine/getstarted/) now.
+
 ## Installation
 
 ### Linux
@@ -27,9 +29,17 @@ curl -sSL https://get.docker.com/ | sh
 
 If you're not willing to run a random shell script, please see the [installation](https://docs.docker.com/engine/installation/linux/) instructions for your distribution.
 
-If you are a complete Docker newbie, you should follow the [series of tutorials](https://docs.docker.com/engine/getstarted/) now.
 
 ### Mac OS X
 
-Download and install [Docker Toolbox](https://docs.docker.com/toolbox/overview/).  [Docker For Mac](https://docs.docker.com/docker-for-mac/) is nice, but it's not quite as finished as the VirtualBox install.  [See the comparison](https://docs.docker.com/docker-for-mac/docker-toolbox/).
- 
+Download and install [Docker For Mac](https://docs.docker.com/docker-for-mac/install/)
+
+Then start up a container:
+
+```
+docker run hello-world
+```
+
+That's it, you have a running Docker container.
+
+If you are a complete Docker newbie, you should probably follow the [series of tutorials](https://docs.docker.com/engine/getstarted/) now.
