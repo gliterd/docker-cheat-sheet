@@ -2,7 +2,7 @@
 
 ## Table of content
 
-* [What is Docker](#what-is-docker)
+* [What is Docker?](#what-is-docker?)
 * [Why Docker](#why-docker)
 * [Installation](#installation)
 * [Containers](#containers)
@@ -10,16 +10,16 @@
 * [Networks](#networks)
 * [Dockerfile](#dockerfile)
 * [Layers](#layers)
-* [Links](#links)
 * [Volumes](#volumes)
+* [Links](#links)
 * [Exposing Ports](#exposing-ports)
 * [Best Practices](#best-practices)
 * [Security](#security)
 * [Tips](#tips)
 
-## What is Docker
+## What is Docker?
 
-"Docker is a tool which helps developers build and ship high quality applications, faster, anywhere."
+Docker is a tool which helps developers build and ship high quality applications, faster, anywhere.
 
 ## Why Docker
 
@@ -255,3 +255,80 @@ Here are some common text editors and their syntax highlighting modules you coul
 * [ONBUILD](https://docs.docker.com/engine/reference/builder/#onbuild) adds a trigger instruction when the image is used as the base for another build.
 * [STOPSIGNAL](https://docs.docker.com/engine/reference/builder/#stopsignal) sets the system call signal that will be sent to the container to exit.
 * [LABEL](https://docs.docker.com/engine/userguide/labels-custom-metadata/) apply key/value metadata to your images, containers, or daemons.
+
+### Examples
+
+* [Examples](https://docs.docker.com/engine/reference/builder/#dockerfile-examples)
+* [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/)
+* [Michael Crosby](http://crosbymichael.com/) has some more [Dockerfiles best practices](http://crosbymichael.com/dockerfile-best-practices.html) / [take 2](http://crosbymichael.com/dockerfile-best-practices-take-2.html).
+* [Building Good Docker Images](http://jonathan.bergknoff.com/journal/building-good-docker-images) / [Building Better Docker Images](http://jonathan.bergknoff.com/journal/building-better-docker-images)
+* [Managing Container Configuration with Metadata](https://speakerdeck.com/garethr/managing-container-configuration-with-metadata)
+
+## Layers
+
+The versioned filesystem in Docker is based on layers. They're like [git commits or changesets for filesystems](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/).
+
+## Volumes
+
+Docker volumes are [free-floating filesystems](https://docs.docker.com/engine/tutorials/dockervolumes/). They don't have to be connected to a particular container. You should use volumes mounted from [data-only containers](https://medium.com/@ramangupta/why-docker-data-containers-are-good-589b3c6c749e) for portability.  
+
+### Lifecycle
+
+* [`docker volume create`](https://docs.docker.com/engine/reference/commandline/volume_create/)
+* [`docker volume rm`](https://docs.docker.com/engine/reference/commandline/volume_rm/)
+
+### Info
+
+* [`docker volume ls`](https://docs.docker.com/engine/reference/commandline/volume_ls/)
+* [`docker volume inspect`](https://docs.docker.com/engine/reference/commandline/volume_inspect/)
+
+Volumes are useful in situations where you can't use links (which are TCP/IP only). For instance, if you need to have two docker instances communicate by leaving stuff on the filesystem.
+
+You can mount them in several docker containers at once, using `docker run --volumes-from`.
+
+Because volumes are isolated filesystems, they are often used to store state from computations between transient containers. That is, you can have a stateless and transient container run from a recipe, blow it away, and then have a second instance of the transient container pick up from where the last one left off.
+
+See [advanced volumes](http://crosbymichael.com/advanced-docker-volumes.html) for more details. Container42 is [also helpful](http://container42.com/2014/11/03/docker-indepth-volumes/).
+
+You can [map MacOS host directories as docker volumes](https://docs.docker.com/engine/tutorials/dockervolumes/#mount-a-host-directory-as-a-data-volume):
+
+```
+docker run -v /Users/wsargent/myapp/src:/src
+```
+
+You can use remote NFS volumes if you're [feeling brave](https://docs.docker.com/engine/tutorials/dockervolumes/#/mount-a-shared-storage-volume-as-a-data-volume).
+
+You may also consider running data-only containers as described [here](http://container42.com/2013/12/16/persistent-volumes-with-docker-container-as-volume-pattern/) to provide some data portability.
+
+## Links
+
+Links are how Docker containers talk to each other [through TCP/IP ports](https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/). [Linking into Redis](https://docs.docker.com/engine/examples/running_redis_service/) and [Atlassian](https://blogs.atlassian.com/2013/11/docker-all-the-things-at-atlassian-automation-and-wiring/) show worked examples. You can also resolve [links by hostname](https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/#/updating-the-etchosts-file).
+
+This has been deprected to some extent by [user-defined networks](https://docs.docker.com/engine/userguide/networking/#user-defined-networks).
+
+NOTE: If you want containers to ONLY communicate with each other through links, start the docker daemon with `-icc=false` to disable inter process communication.
+
+If you have a container with the name CONTAINER (specified by `docker run --name CONTAINER`) and in the Dockerfile, it has an exposed port:
+
+```
+EXPOSE 1337
+```
+
+Then if we create another container called LINKED like so:
+
+```
+docker run -d --link CONTAINER:ALIAS --name LINKED user/wordpress
+```
+
+Then the exposed ports and aliases of CONTAINER will show up in LINKED with the following environment variables:
+
+```
+$ALIAS_PORT_1337_TCP_PORT
+$ALIAS_PORT_1337_TCP_ADDR
+```
+
+And you can connect to it that way.
+
+To delete links, use `docker rm --link`.
+
+Generally, linking between docker services is a subset of "service discovery", a big problem if you're planning to use Docker at scale in production.  Please read [The Docker Ecosystem: Service Discovery and Distributed Configuration Stores](https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-service-discovery-and-distributed-configuration-stores) for more info.
