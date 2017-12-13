@@ -83,3 +83,29 @@ If you want to integrate a container with a [host process manager](https://docs.
 If you want to expose container ports through the host, see the [exposing ports](#exposing-ports) section.
 
 Restart policies on crashed docker instances are [covered here](http://container42.com/2014/09/30/docker-restart-policies/).
+
+### Info
+
+* [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps) shows running containers.
+* [`docker logs`](https://docs.docker.com/engine/reference/commandline/logs) gets logs from container.  (You can use a custom log driver, but logs is only available for `json-file` and `journald` in 1.10).
+* [`docker inspect`](https://docs.docker.com/engine/reference/commandline/inspect) looks at all the info on a container (including IP address).
+* [`docker events`](https://docs.docker.com/engine/reference/commandline/events) gets events from container.
+* [`docker port`](https://docs.docker.com/engine/reference/commandline/port) shows public facing port of container.
+* [`docker top`](https://docs.docker.com/engine/reference/commandline/top) shows running processes in container.
+* [`docker stats`](https://docs.docker.com/engine/reference/commandline/stats) shows containers' resource usage statistics.
+* [`docker diff`](https://docs.docker.com/engine/reference/commandline/diff) shows changed files in the container's FS.
+
+`docker ps -a` shows running and stopped containers.
+
+`docker stats --all` shows a running list of containers.
+
+### Import / Export
+
+* [`docker cp`](https://docs.docker.com/engine/reference/commandline/cp) copies files or folders between a container and the local filesystem.
+* [`docker export`](https://docs.docker.com/engine/reference/commandline/export) turns container filesystem into tarball archive stream to STDOUT.
+
+### Executing Commands
+
+* [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec) to execute a command in container.
+
+To enter a running container, attach a new shell process to a running container called foo, use: `docker exec -it foo /bin/bash`.
