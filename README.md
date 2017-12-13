@@ -59,3 +59,10 @@ Docker implements a high-level API to provide lightweight containers that run pr
 * [`docker run`](https://docs.docker.com/engine/reference/commandline/run) creates and starts a container in one operation.
 * [`docker rm`](https://docs.docker.com/engine/reference/commandline/rm) deletes a container.
 * [`docker update`](https://docs.docker.com/engine/reference/commandline/update/) updates a container's resource limits.
+
+Normally if you run a container without options it will start and stop immediately, if you want keep it running you can use the command, `docker run -td container_id` this will use the option `-t` that will allocate a pseudo-TTY session and `-d` that will detach automatically the container (run container in background and print container ID)
+
+
+If you want a transient container, `docker run --rm` will remove the container after it stops.
+
+Another useful option is `docker run --name customname docker_image` because when you specify the `--name` inside the run command this will allow you to start and stop a container by calling it with the name the you specified when you created it.
