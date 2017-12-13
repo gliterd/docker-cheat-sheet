@@ -441,3 +441,9 @@ Set volumes to be read only:
 ```
 docker run -v $(pwd)/secrets:/secrets:ro debian
 ```
+
+
+## Tips
+
+* [15 Docker Tips in 5 minutes](http://sssslide.com/speakerdeck.com/bmorearty/15-docker-tips-in-5-minutes)
+* [CodeFresh Everyday Hacks Docker](https://codefresh.io/blog/everyday-hacks-docker/)
