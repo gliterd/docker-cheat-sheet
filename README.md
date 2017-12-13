@@ -2,8 +2,9 @@
 
 ## Table of content
 
-* [What is Docker] (#what-is-docker)
-* [Why Docker] (#why-docker)
+* [What is Docker](#what-is-docker)
+* [Why Docker](#why-docker)
+* [Installation](#installation)
 
 ## What is Docker
 
