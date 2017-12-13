@@ -109,3 +109,55 @@ Restart policies on crashed docker instances are [covered here](http://container
 * [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec) to execute a command in container.
 
 To enter a running container, attach a new shell process to a running container called foo, use: `docker exec -it foo /bin/bash`.
+
+## Images
+
+Images are just [templates for docker containers](https://docs.docker.com/engine/understanding-docker/#how-does-a-docker-image-work).
+
+### Lifecycle
+
+* [`docker images`](https://docs.docker.com/engine/reference/commandline/images) shows all images.
+* [`docker import`](https://docs.docker.com/engine/reference/commandline/import) creates an image from a tarball.
+* [`docker build`](https://docs.docker.com/engine/reference/commandline/build) creates image from Dockerfile.
+* [`docker commit`](https://docs.docker.com/engine/reference/commandline/commit) creates image from a container, pausing it temporarily if it is running.
+* [`docker rmi`](https://docs.docker.com/engine/reference/commandline/rmi) removes an image.
+* [`docker load`](https://docs.docker.com/engine/reference/commandline/load) loads an image from a tar archive as STDIN, including images and tags (as of 0.7).
+* [`docker save`](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions (as of 0.7).
+
+### Info
+
+* [`docker history`](https://docs.docker.com/engine/reference/commandline/history) shows history of image.
+* [`docker tag`](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name (local or registry).
+
+### Cleaning up
+
+While you can use the `docker rmi` command to remove specific images, there's a tool called [docker-gc](https://github.com/spotify/docker-gc) that will clean up images that are no longer used by any containers in a safe manner.
+
+### Load/Save image
+
+Load an image from file:
+```
+docker load < my_image.tar.gz
+```
+
+Save an existing image:
+```
+docker save my_image:my_tag | gzip > my_image.tar.gz
+```
+
+### Import/Export container
+
+Import a container as an image from file:
+```
+cat my_container.tar.gz | docker import - my_image:my_tag
+```
+
+Export an existing container:
+```
+docker export my_container | gzip > my_container.tar.gz
+```
+
+### Difference between loading a saved image and importing an exported container as an image
+
+Loading an image using the `load` command creates a new image including its history.  
+Importing a container as an image using the `import` command creates a new image excluding the history which results in a smaller image size compared to loading an image.
