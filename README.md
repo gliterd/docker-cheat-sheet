@@ -66,3 +66,20 @@ Normally if you run a container without options it will start and stop immediate
 If you want a transient container, `docker run --rm` will remove the container after it stops.
 
 Another useful option is `docker run --name customname docker_image` because when you specify the `--name` inside the run command this will allow you to start and stop a container by calling it with the name the you specified when you created it.
+
+### Starting and Stopping
+
+* [`docker start`](https://docs.docker.com/engine/reference/commandline/start) starts a container so it is running.
+* [`docker stop`](https://docs.docker.com/engine/reference/commandline/stop) stops a running container.
+* [`docker restart`](https://docs.docker.com/engine/reference/commandline/restart) stops and starts a container.
+* [`docker pause`](https://docs.docker.com/engine/reference/commandline/pause/) pauses a running container, "freezing" it in place.
+* [`docker unpause`](https://docs.docker.com/engine/reference/commandline/unpause/) will unpause a running container.
+* [`docker wait`](https://docs.docker.com/engine/reference/commandline/wait) blocks until running container stops.
+* [`docker kill`](https://docs.docker.com/engine/reference/commandline/kill) sends a SIGKILL to a running container.
+* [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach) will connect to a running container.
+
+If you want to integrate a container with a [host process manager](https://docs.docker.com/engine/admin/host_integration/), start the daemon with `-r=false` then use `docker start -a`.
+
+If you want to expose container ports through the host, see the [exposing ports](#exposing-ports) section.
+
+Restart policies on crashed docker instances are [covered here](http://container42.com/2014/09/30/docker-restart-policies/).
