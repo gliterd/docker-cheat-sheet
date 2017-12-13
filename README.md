@@ -42,7 +42,11 @@ If you're not willing to run a random shell script, please see the [installation
 
 Download and install [Docker For Mac](https://docs.docker.com/docker-for-mac/install/)
 
-Then start up a container:
+### Windows
+Use the [msi](https://download.docker.com/win/stable/InstallDocker.msi) installer
+
+
+#### Then start up a container:
 
 ```
 docker run hello-world
